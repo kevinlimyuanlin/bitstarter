@@ -27,6 +27,7 @@ var rest = require('restler');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
 var sys = require('util');
+var tempDir = "temp.html"
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -80,12 +81,12 @@ if(require.main == module) {
 		sys.puts('Error: ' + result.message);
 		this.retry(5000); // try again after 5 sec
 	    } else {
-		fs.writeFile('temp.html', result, function(err) {
+		fs.writeFile(tempDir, result, function(err) {
 		    if(err) console.log(err);
 		});
 	    }});
 
-	var checkJson = checkHtmlFile('temp.html', program.checks);
+	var checkJson = checkHtmlFile(tempDir, program.checks);
 	var outJson = JSON.stringify(checkJson, null, 4);
 	console.log(outJson);
 	
