@@ -43,7 +43,7 @@ var cheerioHtmlFile = function(htmlfile) {
 	return cheerio.load(fs.readFileSync(htmlfile));
     }
     if(program.url) {
-	return cheerio.load(urlHTML);
+	return cheerio.load(htmlfile);
     }
 };
 
@@ -86,17 +86,11 @@ if(require.main == module) {
 		sys.puts('Error: ' + result.message);
 		this.retry(5000); // try again after 5 sec
 	    } else {
-		var urlHTML = result;
-	    }
+		var checkJson = checkHtmlFile(result, program.checks);
+		var outJson = JSON.stringify(checkJson, null, 4);
+		console.log(outJson);
+	    }});
 
-	    //		fs.writeFile(tempDir, result, function(err) {
-	    //		    if(err) console.log(err);
-	    //	});
-	});
-
-	var checkJson = checkHtmlFile(urlHTML, program.checks);
-	var outJson = JSON.stringify(checkJson, null, 4);
-	console.log(outJson);
 	
     }
 }
