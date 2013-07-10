@@ -74,13 +74,18 @@ if(require.main == module) {
 	console.log(outJson);
     }
     if(program.url) {
-	rest.get(url).on('complete', function(result) {
-	    fs.writeFile("~/bitstarter/temp.txt", result);
+	rest.get(program.url).on('complete', function(result) {
+	    fs.writeFile("temp.html", result, function(err) {
+		if(err) console.log(err);
+		else console.log("the file was saved!");
+	    });
+	console.log("blah")
 	});
-	var checkJson = checkHtmlFile('temp.txt', program.checks);
+
+	var checkJson = checkHtmlFile('temp.html', program.checks);
 	var outJson = JSON.stringify(checkJson, null, 4);
 	console.log(outJson);
-
+	
     }
 }
 
